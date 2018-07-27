@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'sx_order',
     # 用户中心: 注册页register.html,登陆页login.html 信息info/订单order/收货地址site
     'sx_user',
+    # 后台管理
+    'ttsxAdmin',
 ]
 
 MIDDLEWARE = [

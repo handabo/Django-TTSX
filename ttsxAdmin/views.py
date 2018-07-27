@@ -9,8 +9,8 @@ from sx_user.models import UserModel, UserTicketModel
 from utils.functions import get_ticket
 
 
+# 后台登陆
 def admin_login(request):
-    # 后台登陆
     if request.method == 'GET':
         return render(request, 'admin/login.html')
 
@@ -39,19 +39,100 @@ def admin_login(request):
                 return response
             else:
                 msg = '用户名或密码错误'
-                return render(request, 'user/login.html', {'msg':msg})
+                return render(request, 'user/login.html', {'msg': msg})
         else:
             msg = '用户名不存在,请注册后在登陆'
-            return render(request, 'user/login.html', {'msg':msg})
+            return render(request, 'user/login.html', {'msg': msg})
 
 
+# 后台首页
 def admin_index(request):
     if request.method == 'GET':
         return render(request, 'admin/index.html')
 
 
+# 商品列表
+def admin_product_list(request):
+    if request.method == 'GET':
+        return render(request, 'admin/product_list.html')
 
 
+# 商品详情
+def admin_product_detail(request):
+    if request.method == 'GET':
+        return render(request, 'admin/product_detail.html')
+
+
+# 商品回收站
+def admin_recycle_bin(request):
+    if request.method == 'GET':
+        return render(request, 'admin/recycle_bin.html')
+
+
+# 订单列表
+def admin_order_list(request):
+    if request.method == 'GET':
+        return render(request, 'admin/order_list.html')
+
+
+# 订单详情
+def admin_order_detail(request):
+    if request.method == 'GET':
+        return render(request, 'admin/order_detail.html')
+
+
+# 会员列表
+def admin_user_list(request):
+    if request.method == 'GET':
+        return render(request, 'admin/user_list.html')
+
+
+# 添加会员
+def admin_user_detail(request):
+    if request.method == 'GET':
+        return render(request, 'admin/user_detail.html')
+
+
+# 会员等级
+def admin_user_rank(request):
+    if request.method == 'GET':
+        return render(request, 'admin/user_rank.html')
+
+
+# 会员资金管理
+def admin_adjust_funding(request):
+    if request.method == 'GET':
+        return render(request, 'admin/adjust_funding.html')
+
+
+# 站点基础设置
+def admin_setting(request):
+    if request.method == 'GET':
+        return render(request, 'admin/setting.html')
+
+
+# 配送方式
+def admin_express_list(request):
+    if request.method == 'GET':
+        return render(request, 'admin/express_list.html')
+
+
+# 支付方式
+def admin_pay_list(request):
+    if request.method == 'GET':
+        return render(request, 'admin/pay_list.html')
+
+
+# 流量统计
+def admin_discharge_statistic(request):
+    if request.method == 'GET':
+        return render(request, 'admin/discharge_statistic.html')
+
+
+# 销售额统计
+def admin_sales_volume(request):
+    if request.method == 'GET':
+        return render(request, 'admin/sales_volume.html')
 
 
 
