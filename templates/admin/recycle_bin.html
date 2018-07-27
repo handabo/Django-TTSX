@@ -5,12 +5,12 @@
 <meta charset="utf-8"/>
 <title>后台管理系统</title>
 <meta name="author" content="DeathGhost" />
-<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/style.css' %}">
 <!--[if lt IE 9]>
-<script src="js/html5.js"></script>
+<script src="{% static 'admin/js/html5.js' %}"></script>
 <![endif]-->
-<script src="js/jquery.js"></script>
-<script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="{% static 'admin/js/jquery.js' %}"></script>
+<script src="{% static 'admin/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
 <script>
 
 	(function($){
@@ -38,7 +38,7 @@
 <body>
 <!--header-->
 <header>
- <h1><img src="images/admin_logo.png"/></h1>
+ <h1><img src="{% static 'admin/images/admin_logo.png' %}"/></h1>
  <ul class="rt_nav">
   <li><a href="http://www.mycodes.net" target="_blank" class="website_icon">站点首页</a></li>
   <li><a href="#" class="clear_icon">清除缓存</a></li>
@@ -117,52 +117,31 @@
        <input type="text" class="textbox textbox_225" placeholder="输入产品关键词或产品货号..."/>
        <input type="button" value="查询" class="group_btn"/>
       </section>
+
       <table class="table">
        <tr>
-        <th>缩略图</th>
-        <th>产品名称</th>
+        <th>商品图片</th>
+        <th>商品名称</th>
         <th>货号</th>
-        <th>单价</th>
+        <th>价格</th>
         <th>单位</th>
-        <th>精品</th>
-        <th>新品</th>
-        <th>热销</th>
         <th>库存</th>
         <th>操作</th>
        </tr>
        <tr>
-        <td class="center"><img src="upload/goods01.jpg" width="50" height="50"/></td>
+        <td class="center"><img src="{% static 'admin/upload/goods01.jpg' %}" width="50" height="50"/></td>
         <td>这里是产品名称</td>
         <td class="center">A15902</td>
         <td class="center"><strong class="rmb_icon">59.00</strong></td>
-        <td class="center">包</td>
-        <td class="center"><a title="是" class="link_icon">&#89;</a></td>
-        <td class="center"><a title="否" class="link_icon">&#88;</a></td>
-        <td class="center"><a title="是" class="link_icon">&#89;</td>
-        <td class="center">5559</td>
+        <td class="center">kg</td>
+        <td class="center">库存</td>
         <td class="center">
-         <a href="#" title="预览" class="link_icon" target="_blank">&#118;</a>
-         <a href="#" title="恢复到产品列表" class="link_icon">&#47;</a>
-         <a href="#" title="彻底删除" class="link_icon">&#100;</a>
-        </td>
-       </tr>
-       <tr>
-        <td class="center"><img src="upload/goods02.jpg" width="50" height="50"/></td>
-        <td>这里是产品名称</td>
-        <td class="center">A15902</td>
-        <td class="center"><strong class="rmb_icon">59.00</strong></td>
-        <td class="center">包</td>
-        <td class="center"><a title="是" class="link_icon">&#89;</a></td>
-        <td class="center"><a title="否" class="link_icon">&#88;</a></td>
-        <td class="center"><a title="是" class="link_icon">&#89;</a></td>
-        <td class="center">5559</td>
-        <td class="center">
-         <a href="#" title="预览" class="link_icon" target="_blank">&#118;</a>
-         <a href="#" title="恢复到产品列表" class="link_icon">&#47;</a>
-         <a href="#" title="彻底删除" class="link_icon">&#100;</a>
+         <a href="product_detail.html" title="编辑" class="link_icon">&#101;</a>
+         <a href="#" title="删除" class="link_icon">&#100;</a>
         </td>
        </tr>
       </table>
+
       <aside class="paging">
        <a>第一页</a>
        <a>1</a>

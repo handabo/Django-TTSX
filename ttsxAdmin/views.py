@@ -1,10 +1,11 @@
 from datetime import datetime, timedelta
 
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import check_password
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 
+from sx_store.models import GoodsValue
 from sx_user.models import UserModel, UserTicketModel
 from utils.functions import get_ticket
 
@@ -54,13 +55,40 @@ def admin_index(request):
 # 商品列表
 def admin_product_list(request):
     if request.method == 'GET':
-        return render(request, 'admin/product_list.html')
+        goods = GoodsValue.objects.all()
+        data = {
+            'goods': goods
+        }
+        return render(request, 'admin/product_list.html', data)
 
 
 # 商品详情
 def admin_product_detail(request):
     if request.method == 'GET':
         return render(request, 'admin/product_detail.html')
+    if request.method == 'POST':
+        g_name = request.POST.get('g_name')
+        g_img = request.FILES.get('g_img')
+        g_num = request.POST.get('g_num')
+        g_price = request.POST.get('g_price')
+        g_unit = request.POST.get('g_unit')
+        g_repertory = request.POST.get('g_repertory')
+
+        if not all([g_name, g_img, g_num, g_price, g_unit, g_repertory]):
+            data = {
+                'msg': '商品信息请填写完整'
+            }
+            return render(request, 'admin/product_detail.html', data)
+        # 添加商品到数据库sx_goods表中
+        GoodsValue.objects.create(g_name=g_name,
+                                  g_img=g_img,
+                                  g_num=g_num,
+                                  g_price=g_price,
+                                  g_unit=g_unit,
+                                  g_repertory=g_repertory,
+                                  )
+        # 商品添加成功后跳转到商品列表页
+        return HttpResponseRedirect(reverse('admin:admin_product_list'))
 
 
 # 商品回收站

@@ -15,20 +15,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='UserModel',
+            name='AdminUserModel',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('username', models.CharField(max_length=32, unique=True)),
-                ('password', models.CharField(max_length=256)),
-                ('password_c', models.CharField(max_length=256)),
-                ('email', models.CharField(max_length=64, unique=True)),
-                ('recipients', models.CharField(default='', max_length=10)),
-                ('phone', models.CharField(default='', max_length=11)),
-                ('addressee_p', models.CharField(default='', max_length=6)),
-                ('direction', models.CharField(default='', max_length=100)),
+                ('username', models.CharField(max_length=32, unique=True, verbose_name='用户名')),
+                ('password', models.CharField(max_length=256, verbose_name='密码')),
             ],
             options={
-                'db_table': 'sx_users',
+                'db_table': 'admin_users',
             },
         ),
         migrations.CreateModel(
@@ -37,10 +31,10 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('ticket', models.CharField(max_length=256)),
                 ('out_time', models.DateTimeField()),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sx_user.UserModel')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='ttsxAdmin.AdminUserModel')),
             ],
             options={
-                'db_table': 'sx_users_ticket',
+                'db_table': 'admin_users_ticket',
             },
         ),
     ]

@@ -14,7 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.contrib.staticfiles.urls import static
 
+from ttsx import settings
 
 urlpatterns = [
     # 后台管理路由
@@ -28,3 +30,5 @@ urlpatterns = [
     # 用户中心路由
     url(r'^user/', include('sx_user.urls', namespace='user')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
