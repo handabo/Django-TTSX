@@ -12,7 +12,7 @@ from utils.functions import get_ticket
 def register(request):
     # 注册
     if request.method == 'GET':
-        return render(request, 'user/register.html')
+        return render(request, 'register.html')
 
     if request.method == 'POST':
         username = request.POST.get('user_name')
@@ -24,7 +24,7 @@ def register(request):
             data = {
                 'msg': '信息请填写完整'
             }
-            return render(request, 'user/register.html', data)
+            return render(request, 'register.html', data)
         # 加密password
         password = make_password(password)
         password_c = make_password(password_c)
@@ -40,7 +40,7 @@ def register(request):
 def login(request):
     # 登陆
     if request.method == 'GET':
-        return render(request, 'user/login.html')
+        return render(request, 'login.html')
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -67,22 +67,22 @@ def login(request):
                 return response
             else:
                 msg = '用户名或密码错误'
-                return render(request, 'user/login.html', {'msg': msg})
+                return render(request, 'login.html', {'msg': msg})
         else:
             msg = '用户名不存在,请注册后在登陆'
-            return render(request, 'user/login.html', {'msg': msg})
+            return render(request, 'login.html', {'msg': msg})
 
 
 def user_center_info(request):
     if request.method == 'GET':
-        return render(request, 'user/user_center_info.html')
+        return render(request, 'user_center_info.html')
 
 
 def user_center_order(request):
     if request.method == 'GET':
-        return render(request, 'user/user_center_order.html')
+        return render(request, 'user_center_order.html')
 
 
 def user_center_site(request):
     if request.method == 'GET':
-        return render(request, 'user/user_center_site.html')
+        return render(request, 'user_center_site.html')

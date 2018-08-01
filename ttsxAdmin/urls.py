@@ -7,12 +7,24 @@ urlpatterns = [
     url(r'^admin_login/', views.admin_login, name='admin_login'),
     # 后台首页
     url(r'^admin_index/', views.admin_index, name='admin_index'),
-    # 商品列表
+    # 商品列表分页展示
     url(r'^admin_product_list/', views.admin_product_list, name='admin_product_list'),
-    # 商品详情
+    # 添加商品
     url(r'^admin_product_detail/', views.admin_product_detail, name='admin_product_detail'),
+    # 修改商品
+    url(r'^admin_change_goods/', views.admin_change_goods, name='admin_change_goods'),
+    # 删除商品
+    url(r'^admin_del_goods/', views.admin_del_goods, name='admin_del_goods'),
     # 商品回收站
     url(r'^admin_recycle_bin/', views.admin_recycle_bin, name='admin_recycle_bin'),
+    # 恢复商品
+    url(r'^admin_recover_goods/', views.admin_recover_goods, name='admin_recover_goods'),
+    # 彻底删除商品
+    url(r'^admin_delete_goods/', views.admin_delete_goods, name='admin_delete_goods'),
+
+
+    # 查找商品
+    url(r'^admin_find_goods/', views.admin_find_goods, name='admin_find_goods'),
     # 订单列表
     url(r'^admin_order_list/', views.admin_order_list, name='admin_order_list'),
     # 订单详情

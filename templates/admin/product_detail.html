@@ -56,31 +56,31 @@
    <dl>
     <dt>常用布局示例</dt>
     <!--当前链接则添加class:active-->
-    <dd><a href="{% url 'admin:admin_product_list' %}" class="active">商品列表示例</a></dd>
-    <dd><a href="{% url 'admin:admin_product_detail' %}">商品详情示例</a></dd>
-    <dd><a href="{% url 'admin:admin_recycle_bin' %}">商品回收站示例</a></dd>
+    <dd><a href="{% url 'admin:admin_product_list' %}" class="active">商品列表</a></dd>
+    <dd><a href="{% url 'admin:admin_product_detail' %}">添加/修改商品</a></dd>
+    <dd><a href="{% url 'admin:admin_recycle_bin' %}">商品回收站</a></dd>
    </dl>
   </li>
   <li>
    <dl>
     <dt>订单信息</dt>
-    <dd><a href="{% url 'admin:admin_order_list' %}">订单列表示例</a></dd>
-    <dd><a href="{% url 'admin:admin_order_detail' %}">订单详情示例</a></dd>
+    <dd><a href="{% url 'admin:admin_order_list' %}">订单列表</a></dd>
+    <dd><a href="{% url 'admin:admin_order_detail' %}">订单详情</a></dd>
    </dl>
   </li>
   <li>
    <dl>
     <dt>会员管理</dt>
-    <dd><a href="{% url 'admin:admin_user_list' %}">会员列表示例</a></dd>
-    <dd><a href="{% url 'admin:admin_user_detail' %}">添加会员（详情）示例</a></dd>
-    <dd><a href="{% url 'admin:admin_user_rank' %}">会员等级示例</a></dd>
-    <dd><a href="{% url 'admin:admin_adjust_funding' %}">会员资金管理示例</a></dd>
+    <dd><a href="{% url 'admin:admin_user_list' %}">会员列表</a></dd>
+    <dd><a href="{% url 'admin:admin_user_detail' %}">添加会员(详情)</a></dd>
+    <dd><a href="{% url 'admin:admin_user_rank' %}">会员等级</a></dd>
+    <dd><a href="{% url 'admin:admin_adjust_funding' %}">会员资金管理</a></dd>
    </dl>
   </li>
   <li>
    <dl>
     <dt>基础设置</dt>
-    <dd><a href="{% url 'admin:admin_setting' %}">站点基础设置示例</a></dd>
+    <dd><a href="{% url 'admin:admin_setting' %}">站点基础设置</a></dd>
    </dl>
   </li>
   <li>
@@ -106,7 +106,7 @@
 <section class="rt_wrap content mCustomScrollbar">
  <div class="rt_content">
       <div class="page_title">
-       <h2 class="fl">商品详情示例</h2>
+       <h2 class="fl">商品添加与修改</h2>
        <a href="{% url 'admin:admin_product_list' %}" class="fr top_rt_btn">返回产品列表</a>
       </div>
 
@@ -114,53 +114,53 @@
      {% csrf_token %}
      <section>
       <ul class="ulColumn2">
+           <input type="hidden" name="g_id"  value="{{ goods.id }}">
        <li>
         <span class="item_name" style="width:120px;">商品名称：</span>
-        <input type="text" name="g_name" class="textbox textbox_295" placeholder="商品名称..."/>
+        <input type="text" name="g_name" class="textbox textbox_295" placeholder="商品名称..." value="{{ goods.g_name }}"/>
         <!--<span class="errorTips">错误提示信息...</span>-->
        </li>
 
        <li>
         <span class="item_name" style="width:120px;">货号：</span>
-        <input type="text" name="g_num" class="textbox" placeholder="商品货号..."/>
+        <input type="text" name="g_num" class="textbox" placeholder="商品货号..." value="{{ goods.g_num }}"/>
         <!--<span class="errorTips">错误提示信息...</span>-->
        </li>
 
        <li>
         <span class="item_name" style="width:120px;">价格：</span>
-        <input type="text" name="g_price" class="textbox" placeholder="商品价格..."/>
+        <input type="text" name="g_price" class="textbox" placeholder="商品价格..." value="{{ goods.g_price }}"/>
         <!--<span class="errorTips">错误提示信息...</span>-->
        </li>
 
        <li>
         <span class="item_name" style="width:120px;">单位：</span>
-        <input type="text" name="g_unit" class="textbox" placeholder="商品单位..."/>
+        <input type="text" name="g_unit" class="textbox" placeholder="商品单位..." value="{{ goods.g_unit }}"/>
         <!--<span class="errorTips">错误提示信息...</span>-->
        </li>
 
        <li>
         <span class="item_name" style="width:120px;">库存：</span>
-        <input type="text" name="g_repertory" class="textbox" placeholder="商品库存..."/>
+        <input type="text" name="g_repertory" class="textbox" placeholder="商品库存..." value="{{ goods.g_repertory }}"/>
         <!--<span class="errorTips">错误提示信息...</span>-->
        </li>
 
        <li>
         <span class="item_name" style="width:120px;">商品分类：</span>
         <select name="kind" class="select">
-         <option>猪牛羊肉</option>
-         <option>速冻食品</option>
-         <option>新鲜水果</option>
-         <option>海鲜水产</option>
-         <option>新鲜蔬菜</option>
-         <option>禽类蛋品</option>
+
+         {% if goods.gtype.kind %}
+             <option>{{ goods.gtype.kind }}</option>
+         {% else %}
+             {% for k in kinds %}
+                 {% if goods.gtype.kind != k.kind %}
+                    <option>{{ k.kind }}</option>
+                 {% endif %}
+             {% endfor %}
+         {% endif %}
+
         </select>
        </li>
-
-       <!--<li>-->
-        <!--<span class="item_name" style="width:120px;">商品种类：</span>-->
-        <!--<input type="text" name="gtype" class="textbox" placeholder="商品种类..."/>-->
-        <!--&lt;!&ndash;<span class="errorTips">错误提示信息...</span>&ndash;&gt;-->
-       <!--</li>-->
 
        <li>
         <span class="item_name" style="width:120px;">上传商品图片：</span>

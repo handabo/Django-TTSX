@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}天天生鲜-首页{% endblock %}
+{% block extCSS %}{% endblock %}
+
+{% block content %}
+	<div class="navbar_con">
+		<div class="navbar">
+			<h1 class="fl">全部商品分类</h1>
+			<ul class="navlist fl">
+				<li><a href="">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">手机生鲜</a></li>
+				<li class="interval">|</li>
+				<li><a href="">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="center_con clearfix">
+		<ul class="subnav fl">
+			<li><a href="#model01" class="fruit">新鲜水果</a></li>
+			<li><a href="#model02" class="seafood">海鲜水产</a></li>
+			<li><a href="#model03" class="meet">猪牛羊肉</a></li>
+			<li><a href="#model04" class="egg">禽类蛋品</a></li>
+			<li><a href="#model05" class="vegetables">新鲜蔬菜</a></li>
+			<li><a href="#model06" class="ice">速冻食品</a></li>
+		</ul>
+		<div class="slide fl">
+			<ul class="slide_pics">
+				<li><img src="{% static 'ttsx/images/slide.jpg' %}" alt="幻灯片"></li>
+				<li><img src="{% static 'ttsx/images/slide02.jpg' %}" alt="幻灯片"></li>
+				<li><img src="{% static 'ttsx/images/slide03.jpg' %}" alt="幻灯片"></li>
+				<li><img src="{% static 'ttsx/images/slide04.jpg' %}" alt="幻灯片"></li>
+			</ul>
+			<div class="prev"></div>
+			<div class="next"></div>
+			<ul class="points"></ul>
+		</div>
+		<div class="adv fl">
+			<a href="#"><img src="{% static 'ttsx/images/adv01.jpg' %}"></a>
+			<a href="#"><img src="{% static 'ttsx/images/adv02.jpg' %}"></a>
+		</div>
+	</div>
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model01">新鲜水果</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+				{% for good1 in fresh_fruit %}
+				<a href="#">{{ good1.g_name }}</a>
+				{% endfor %}
+			</div>
+			<a href="{% url 'store:list' %}" class="goods_more fr" id="fruit_more">查看更多 ></a>
+		</div>
+
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="{% static 'ttsx/images/banner01.jpg' %}"></div>
+			<ul class="goods_list fl">
+				{% for good1 in fresh_fruit %}
+				<li>
+					<h4><a href="{% url 'shopping:detail' %}?g_id={{ good1.id }}">{{ good1.g_name }}</a></h4>
+					<a href="{% url 'shopping:detail' %}"><img src="/media/{{ good1.g_img }}"></a>
+					<div class="prize">¥ {{ good1.g_price }}</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+
+	</div>
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model02">海鲜水产</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+				{% for good2 in seafood_aquaculture %}
+				<a href="#">{{ good2.g_name }}</a>
+				{% endfor %}
+			</div>
+			<a href="#" class="goods_more fr">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="{% static 'ttsx/images/banner02.jpg' %}"></div>
+			<ul class="goods_list fl">
+				{% for good2 in seafood_aquaculture %}
+				<li>
+					<h4><a href="#">{{ good2.g_name }}</a></h4>
+					<a href="#"><img src="/media/{{ good2.g_img }}"></a>
+					<div class="prize">¥ {{ good2.g_price }}</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model03">猪牛羊肉</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+				{% for good3 in red_meat %}
+				<a href="#">{{ good3.g_name }}</a>
+				{% endfor %}
+			</div>
+			<a href="#" class="goods_more fr">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="{% static 'ttsx/images/banner03.jpg' %}"></div>
+			<ul class="goods_list fl">
+				{% for good3 in red_meat %}
+				<li>
+					<h4><a href="#">{{ good3.g_name }}</a></h4>
+					<a href="#"><img src="/media/{{ good3.g_img }}"></a>
+					<div class="prize">¥ {{ good3.g_price }}</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model04">禽类蛋品</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+				{% for good4 in poultry_egg %}
+				<a href="#">{{ good4.g_name }}</a>
+				{% endfor %}
+			</div>
+			<a href="#" class="goods_more fr">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="{% static 'ttsx/images/banner04.jpg' %}"></div>
+			<ul class="goods_list fl">
+				{% for good4 in poultry_egg %}
+				<li>
+					<h4><a href="#">{{ good4.g_name }}</a></h4>
+					<a href="#"><img src="/media/{{ good4.g_img }}"></a>
+					<div class="prize">¥ {{ good4.g_price }}</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model05">新鲜蔬菜</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+				{% for good5 in green_goods %}
+				<a href="#">{{ good5.g_name }}</a>
+				{% endfor %}
+			</div>
+			<a href="#" class="goods_more fr">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="{% static 'ttsx/images/banner05.jpg' %}"></div>
+			<ul class="goods_list fl">
+				{% for good5 in green_goods %}
+				<li>
+					<h4><a href="#">{{ good5.g_name }}</a></h4>
+					<a href="#"><img src="/media/{{ good5.g_img }}"></a>
+					<div class="prize">¥ {{ good5.g_price }}</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model06">速冻食品</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+				{% for good6 in quick_frozen %}
+				<a href="#">{{ good6.g_name }}</a>
+				{% endfor %}
+			</div>
+			<a href="#" class="goods_more fr">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="{% static 'ttsx/images/banner06.jpg' %}"></div>
+			<ul class="goods_list fl">
+				{% for good6 in quick_frozen %}
+				<li>
+					<h4><a href="#">{{ good6.g_name }}</a></h4>
+					<a href="#"><img src="/media/{{ good6.g_img }}"></a>
+					<div class="prize">¥ {{ good6.g_price }}</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+{% endblock %}
+
+{% block extJS %}
+	<script type="text/javascript" src="{% static 'ttsx/js/slideshow.js' %}"></script>
+	<script type="text/javascript">
+		BCSlideshow('focuspic');
+		var oFruit = document.getElementById('fruit_more');
+		var oShownum = document.getElementById('show_count');
+
+		var hasorder = localStorage.getItem('order_finish');
+
+		if(hasorder)
+		{
+			oShownum.innerHTML = '2';
+		}
+
+		oFruit.onclick = function(){
+			window.location.href = 'list.html';
+		}
+	</script>
+{% endblock %}

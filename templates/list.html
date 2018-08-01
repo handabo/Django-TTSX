@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}天天生鲜-商品列表{% endblock %}
+{% block extCSS %}{% endblock %}
+
+{% block content %}
+	<div class="navbar_con">
+		<div class="navbar clearfix">
+			<div class="subnav_con fl">
+				<h1>全部商品分类</h1>	
+				<span></span>			
+				<ul class="subnav">
+					{% for k in kinds %}
+					<li><a href="#" class="fruit">{{ k.kind }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<ul class="navlist fl">
+				<li><a href="">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">手机生鲜</a></li>
+				<li class="interval">|</li>
+				<li><a href="">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="breadcrumb">
+		<a href="#">全部分类</a>
+		<span>></span>
+		<a href="#">新鲜水果</a>
+	</div>
+
+	<div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>新品推荐</h3>
+				<ul>
+					{% for tj in tj_goods %}
+					<li>
+						<a href="#"><img src="/media/{{ tj.g_img }}"></a>
+						<h4><a href="#">{{ tj.g_name }}</a></h4>
+						<div class="prize">￥{{ tj.g_price }}</div>
+					</li>
+					{% endfor %}
+
+				</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			<div class="sort_bar">
+				<a href="#" class="active">默认</a>
+				<a href="#">价格</a>
+				<a href="#">人气</a>
+			</div>
+
+			<ul class="goods_type_list clearfix">
+				{% for good in goods %}
+				<li>
+					<a href="detail.html"><img src="/media/{{ good.g_img }}"></a>
+					<h4><a href="detail.html">{{ good.g_name }}</a></h4>
+					<div class="operate">
+						<span class="prize">￥{{ good.g_price }}</span>
+						<span class="unit">{{ good.g_price }}/{{ good.g_unit }}</span>
+						<a href="#" class="add_goods" title="加入购物车"></a>
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
+
+			<div class="pagenation">
+				<a href="#"><上一页</a>
+				<a href="#" class="active">1</a>
+				<a href="#">2</a>
+				<a href="#">3</a>
+				<a href="#">4</a>
+				<a href="#">5</a>
+				<a href="#">下一页></a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

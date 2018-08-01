@@ -56,31 +56,31 @@
    <dl>
     <dt>常用布局示例</dt>
     <!--当前链接则添加class:active-->
-    <dd><a href="{% url 'admin:admin_product_list' %}" class="active">商品列表示例</a></dd>
-    <dd><a href="{% url 'admin:admin_product_detail' %}">商品详情示例</a></dd>
-    <dd><a href="{% url 'admin:admin_recycle_bin' %}">商品回收站示例</a></dd>
+    <dd><a href="{% url 'admin:admin_product_list' %}" class="active">商品列表</a></dd>
+    <dd><a href="{% url 'admin:admin_product_detail' %}">添加/修改商品</a></dd>
+    <dd><a href="{% url 'admin:admin_recycle_bin' %}">商品回收站</a></dd>
    </dl>
   </li>
   <li>
    <dl>
     <dt>订单信息</dt>
-    <dd><a href="{% url 'admin:admin_order_list' %}">订单列表示例</a></dd>
-    <dd><a href="{% url 'admin:admin_order_detail' %}">订单详情示例</a></dd>
+    <dd><a href="{% url 'admin:admin_order_list' %}">订单列表</a></dd>
+    <dd><a href="{% url 'admin:admin_order_detail' %}">订单详情</a></dd>
    </dl>
   </li>
   <li>
    <dl>
     <dt>会员管理</dt>
-    <dd><a href="{% url 'admin:admin_user_list' %}">会员列表示例</a></dd>
-    <dd><a href="{% url 'admin:admin_user_detail' %}">添加会员（详情）示例</a></dd>
-    <dd><a href="{% url 'admin:admin_user_rank' %}">会员等级示例</a></dd>
-    <dd><a href="{% url 'admin:admin_adjust_funding' %}">会员资金管理示例</a></dd>
+    <dd><a href="{% url 'admin:admin_user_list' %}">会员列表</a></dd>
+    <dd><a href="{% url 'admin:admin_user_detail' %}">添加会员(详情)</a></dd>
+    <dd><a href="{% url 'admin:admin_user_rank' %}">会员等级</a></dd>
+    <dd><a href="{% url 'admin:admin_adjust_funding' %}">会员资金管理</a></dd>
    </dl>
   </li>
   <li>
    <dl>
     <dt>基础设置</dt>
-    <dd><a href="{% url 'admin:admin_setting' %}">站点基础设置示例</a></dd>
+    <dd><a href="{% url 'admin:admin_setting' %}">站点基础设置</a></dd>
    </dl>
   </li>
   <li>
@@ -138,18 +138,23 @@
         <td class="center">{{ good.g_repertory }}</td>
 
         <td class="center">
-         <a href="product_detail.html" title="编辑" class="link_icon">&#101;</a>
-         <a href="#" title="删除" class="link_icon">&#100;</a>
+         <a href="{% url 'admin:admin_change_goods' %}?g_id={{ good.id }}" title="修改商品" class="link_icon">&#101;</a>
+         <a href="{% url 'admin:admin_del_goods' %}?g_id={{ good.id }}" title="删除商品" class="link_icon">&#100;</a>
         </td>
        </tr>
        {% endfor %}
 
       </table>
       <aside class="paging">
-       <a>第一页</a>
-       <a>1</a>
-       <a>2</a>
-       <a>最后一页</a>
+       <a href="{% url 'admin:admin_product_list' %}">第一页</a>
+       {% for page in goods.paginator.page_range %}
+           {% if page > 2 %}
+           <a href="{% url 'admin:admin_product_list' %}?page_num={{ page }}">···</a>
+           {% else %}
+           <a href="{% url 'admin:admin_product_list' %}?page_num={{ page }}">{{ page }}</a>
+           {% endif %}
+       {% endfor %}
+       <a href="{% url 'admin:admin_product_list' %}?page_num={{ goods.paginator.num_pages }}">最后一页</a>
       </aside>
  </div>
 </section>

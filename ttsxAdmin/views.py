@@ -1,11 +1,12 @@
 from datetime import datetime, timedelta
 
 from django.contrib.auth.hashers import check_password
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 
-from sx_store.models import GoodsValue
+from sx_store.models import GoodsValue, ArticleCategory
 from sx_user.models import UserModel, UserTicketModel
 from utils.functions import get_ticket
 
@@ -52,20 +53,28 @@ def admin_index(request):
         return render(request, 'admin/index.html')
 
 
-# 商品列表
+# 商品列表分页展示
 def admin_product_list(request):
     if request.method == 'GET':
-        goods = GoodsValue.objects.all()
+        num = request.GET.get('page_num', 1)
+        goods = GoodsValue.objects.filter(isDelete=0)
+        paginator = Paginator(goods, 5)
+        pages = paginator.page(num)
         data = {
-            'goods': goods
+            'goods': pages
         }
         return render(request, 'admin/product_list.html', data)
 
 
-# 商品详情
+# 添加商品
 def admin_product_detail(request):
     if request.method == 'GET':
-        return render(request, 'admin/product_detail.html')
+        kinds = ArticleCategory.objects.all()
+        data = {
+            'kinds': kinds
+        }
+        return render(request, 'admin/product_detail.html', data)
+
     if request.method == 'POST':
         g_name = request.POST.get('g_name')
         g_img = request.FILES.get('g_img')
@@ -73,8 +82,10 @@ def admin_product_detail(request):
         g_price = request.POST.get('g_price')
         g_unit = request.POST.get('g_unit')
         g_repertory = request.POST.get('g_repertory')
+        kind = request.POST.get('kind')
+        gtype_id = ArticleCategory.objects.filter(kind=kind).first().id
 
-        if not all([g_name, g_img, g_num, g_price, g_unit, g_repertory]):
+        if not all([g_name, g_img, g_num, g_price, g_unit, g_repertory, gtype_id]):
             data = {
                 'msg': '商品信息请填写完整'
             }
@@ -86,15 +97,116 @@ def admin_product_detail(request):
                                   g_price=g_price,
                                   g_unit=g_unit,
                                   g_repertory=g_repertory,
+                                  gtype_id=gtype_id
                                   )
         # 商品添加成功后跳转到商品列表页
         return HttpResponseRedirect(reverse('admin:admin_product_list'))
 
 
+# 修改商品
+def admin_change_goods(request):
+    if request.method == 'GET':
+        kinds = ArticleCategory.objects.all()
+        g_id = request.GET.get('g_id')
+        goods = GoodsValue.objects.filter(id=g_id).first()
+        data = {
+            'kinds': kinds,
+            'goods': goods
+        }
+        return render(request, 'admin/product_detail.html', data)
+
+    if request.method == 'POST':
+        g_name = request.POST.get('g_name')
+        g_img = request.FILES.get('g_img')
+        g_num = request.POST.get('g_num')
+        g_price = request.POST.get('g_price')
+        g_unit = request.POST.get('g_unit')
+        g_repertory = request.POST.get('g_repertory')
+        kind = request.POST.get('kind')
+        gtype_id = ArticleCategory.objects.filter(kind=kind).first().id
+
+        g_id = request.POST.get('g_id')
+        goods = GoodsValue.objects.filter(id=g_id).first()
+        data = {
+            'msg': '商品修改成功'
+        }
+        # 如果没修改商品图片
+        if not g_img:
+            goods.g_name = g_name
+            goods.g_num = g_num
+            goods.g_price = g_price
+            goods.g_unit = g_unit
+            goods.g_repertory = g_repertory
+            goods.gtype_id = gtype_id
+            goods.save()
+            return HttpResponseRedirect(reverse('admin:admin_product_list'), data)
+        # 修改商品图片
+        else:
+            goods.g_name = g_name
+            goods.g_img = g_img
+            goods.g_num = g_num
+            goods.g_price = g_price
+            goods.g_unit = g_unit
+            goods.g_repertory = g_repertory
+            goods.gtype_id = gtype_id
+            goods.save()
+            return HttpResponseRedirect(reverse('admin:admin_product_list'), data)
+
+
+# 删除商品
+def admin_del_goods(request):
+    if request.method == 'GET':
+        g_id = request.GET.get('g_id')
+        goods = GoodsValue.objects.filter(id=g_id).first()
+        goods.isDelete = 1
+        goods.save()
+        data = {
+            'msg': '商品删除成功'
+        }
+        return HttpResponseRedirect(reverse('admin:admin_product_list'), data)
+
+
 # 商品回收站
 def admin_recycle_bin(request):
     if request.method == 'GET':
-        return render(request, 'admin/recycle_bin.html')
+        num = request.GET.get('page_num', 1)
+        goods = GoodsValue.objects.filter(isDelete=1)
+        paginator = Paginator(goods, 2)
+        pages = paginator.page(num)
+        data = {
+            'goods': pages
+        }
+        return render(request, 'admin/recycle_bin.html', data)
+
+
+# 恢复商品
+def admin_recover_goods(request):
+    if request.method == 'GET':
+        g_id = request.GET.get('g_id')
+        goods = GoodsValue.objects.filter(id=g_id).first()
+        goods.isDelete = 0
+        goods.save()
+        data = {
+            'msg': '商品恢复成功'
+        }
+        return HttpResponseRedirect(reverse('admin:admin_recycle_bin'), data)
+
+
+# 彻底删除商品
+def admin_delete_goods(request):
+    if request.method == 'GET':
+        g_id = request.GET.get('g_id')
+        GoodsValue.objects.filter(id=g_id).delete()
+        data = {
+            'msg': '彻底删除成功'
+        }
+        return HttpResponseRedirect(reverse('admin:admin_recycle_bin'), data)
+
+
+# 查找商品
+def admin_find_goods(request):
+    if request.method == 'GET':
+        return HttpResponseRedirect(reverse('admin:admin_product_list'))
 
 
 # 订单列表
