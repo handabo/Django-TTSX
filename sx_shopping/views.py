@@ -28,17 +28,19 @@ def add_goods(request):
     if request.method == 'POST':
         user = request.user
         data = {}
-        data['code'] = '1000'
+        data['code'] = '405'
+        data['msg'] = '请登录后再使用'
+
         if user.id:
             goods_id = request.POST.get('goods_id')
-            # 验证当前登录用户是否对同一商品进行添加操作
+            # 验证当前登录用户是否对同一商品进行添加操作, 如果有则继续添加
             cart = CartInfo.objects.filter(user=user, goods_id=goods_id).first()
             if cart:
                 cart.count += 1
                 cart.save()
-                data['count'] = cart.c_num
+                data['count'] = cart.count
             else:
-                # 登录的当前用户没有添加商品到购物车中，则创建
+                # 验证当前登陆用户有没有添加商品到购物车中，如果没有则创建
                 CartInfo.objects.create(user=user, goods_id=goods_id)
                 data['count'] = 1
             data['code'] = '200'
