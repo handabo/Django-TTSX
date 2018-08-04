@@ -8,15 +8,12 @@
 	<div class="navbar_con">
 		<div class="navbar clearfix">
 			<div class="subnav_con fl">
-				<h1>全部商品分类</h1>	
+				<h1>全部商品分类</h1>
 				<span></span>			
 				<ul class="subnav">
-					<li><a href="#" class="fruit">新鲜水果</a></li>
-					<li><a href="#" class="seafood">海鲜水产</a></li>
-					<li><a href="#" class="meet">猪牛羊肉</a></li>
-					<li><a href="#" class="egg">禽类蛋品</a></li>
-					<li><a href="#" class="vegetables">新鲜蔬菜</a></li>
-					<li><a href="#" class="ice">速冻食品</a></li>
+					{% for k in kinds %}
+					<li><a href="#" class="fruit">{{ k.kind }}</a></li>
+					{% endfor %}
 				</ul>
 			</div>
 			<ul class="navlist fl">
@@ -38,21 +35,23 @@
 	</div>
 
 	<div class="goods_detail_con clearfix">
-		<div class="goods_detail_pic fl"><img src="images/goods_detail.jpg"></div>
-
+		<div class="goods_detail_pic fl"><img src="/media/{{ goods.g_img }}" width="350" height="350"></div>
 		<div class="goods_detail_list fr">
-			<h3>大兴大棚草莓</h3>
-			<p>草莓浆果柔软多汁，味美爽口，适合速冻保鲜贮藏。草莓速冻后，可以保持原有的色、香、味，既便于贮藏，又便于外销。</p>
+			<h3>{{ goods.g_name }}</h3>
+			<!--<p>草莓浆果柔软多汁，味美爽口，适合速冻保鲜贮藏。草莓速冻后，可以保持原有的色、香、味，既便于贮藏，又便于外销。</p>-->
 			<div class="prize_bar">
-				<span class="show_pirze">¥<em>16.80</em></span>
-				<span class="show_unit">单  位：500g</span>
+				<span class="show_pirze">¥<em>{{ goods.g_price }}</em></span>
+				<span class="show_unit">单  位：{{ goods.g_unit }}</span>
 			</div>
 			<div class="goods_num clearfix">
 				<div class="num_name fl">数 量：</div>
 				<div class="num_add fl">
 					<input type="text" class="num_show fl" value="1">
-					<a href="javascript:;" class="add fr">+</a>
-					<a href="javascript:;" class="minus fr">-</a>	
+
+					<a href="javascript:;" onclick="addgoods({{ goods.id }})" class="add fr">+</a>
+
+					<a href="javascript:;" class="minus fr">-</a>
+
 				</div> 
 			</div>
 			<div class="total">总价：<em>16.80元</em></div>
@@ -62,6 +61,7 @@
 			</div>
 		</div>
 	</div>
+
 
 	<div class="main_wrap clearfix">
 		<div class="l_wrap fl clearfix">
@@ -100,7 +100,7 @@
 {% endblock %}
 
 {% block extJS %}
-	<script type="text/javascript" src="js/jquery-1.12.2.js"></script>
+	<script type="text/javascript" src="{% static 'ttsx/common/functions.js' %}"></script>
 	<script type="text/javascript">
 		var $add_x = $('#add_cart').offset().top;
 		var $add_y = $('#add_cart').offset().left;
@@ -121,5 +121,4 @@
 			});
 		})
 	</script>
-
 {% endblock %}

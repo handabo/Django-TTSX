@@ -9,8 +9,8 @@ from sx_user.models import UserModel, UserTicketModel
 from utils.functions import get_ticket
 
 
+# 注册
 def register(request):
-    # 注册
     if request.method == 'GET':
         return render(request, 'register.html')
 
@@ -22,7 +22,7 @@ def register(request):
         # 验证参数都不能为空
         if not all([username, password, password_c, email]):
             data = {
-                'msg': '信息请填写完整'
+                'msg': '请填写完整的信息'
             }
             return render(request, 'register.html', data)
         # 加密password
@@ -37,8 +37,8 @@ def register(request):
         return HttpResponseRedirect(reverse('user:login'))
 
 
+# 登陆
 def login(request):
-    # 登陆
     if request.method == 'GET':
         return render(request, 'login.html')
 
@@ -48,7 +48,7 @@ def login(request):
         data = {}
         # 验证信息是否填写完整
         if not all([username, password]):
-            data['msg'] = '用户名或者密码不能为空'
+            data['msg'] = '请填写完整的用户名或密码'
         # 验证用户是否注册
         if UserModel.objects.filter(username=username).exists():
             user = UserModel.objects.get(username=username)
@@ -57,13 +57,12 @@ def login(request):
                 # 如果密码正确将ticket值保存在cookie中
                 ticket = get_ticket()
                 response = HttpResponseRedirect(reverse('store:index'))
-                out_time = datetime.now() + timedelta(days=1)
+                out_time = datetime.now() + timedelta(days=2)
                 response.set_cookie('ticket', ticket, expires=out_time)
                 # 保存ticket值到数据库user_ticket表中
                 UserTicketModel.objects.create(user=user,
                                                out_time=out_time,
                                                ticket=ticket)
-
                 return response
             else:
                 msg = '用户名或密码错误'
@@ -73,6 +72,17 @@ def login(request):
             return render(request, 'login.html', {'msg': msg})
 
 
+# 退出
+def logout(request):
+    if request.method == 'GET':
+        # 退出则删除数据库中的ticket值
+        ticket = request.COOKIES.get('ticket')
+        user_ticket = UserTicketModel.objects.filter(ticket=ticket).first()
+        UserTicketModel.objects.filter(user=user_ticket.user).delete()
+        return HttpResponseRedirect(reverse('user:login'))
+
+
+# 用户中心
 def user_center_info(request):
     if request.method == 'GET':
         return render(request, 'user_center_info.html')

@@ -21,14 +21,15 @@ from ttsx import settings
 urlpatterns = [
     # 后台管理路由
     url(r'^admin/', include('ttsxAdmin.urls', namespace='admin')),
+    # 用户中心路由
+    url(r'^user/', include('sx_user.urls', namespace='user')),
     # 商城展示路由
     url(r'^store/', include('sx_store.urls', namespace='store')),
     # 购物过程路由
     url(r'^shopping/', include('sx_shopping.urls', namespace='shopping')),
     # 订单路由
     url(r'^order/', include('sx_order.urls', namespace='order')),
-    # 用户中心路由
-    url(r'^user/', include('sx_user.urls', namespace='user')),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

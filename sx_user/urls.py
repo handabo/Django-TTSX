@@ -7,6 +7,8 @@ urlpatterns = [
     url(r'^register/', views.register, name='register'),
     # 登陆
     url(r'^login/', views.login, name='login'),
+    # 退出
+    url(r'^logout/', views.logout, name='logout'),
     # 用户中心 - 用户信息页
     url(r'^user_center_info/', views.user_center_info, name='user_center_info'),
     # 用户中心 - 用户订单页

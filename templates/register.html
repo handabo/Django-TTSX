@@ -1,16 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+{% extends 'base_user.html' %}
 
 {% load static %}
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>天天生鲜-注册</title>
-	<link rel="stylesheet" type="text/css" href="{% static 'ttsx/css/reset.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'ttsx/css/main.css' %}">
-	<script type="text/javascript" src="{% static 'ttsx/js/jquery-1.12.4.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'ttsx/js/register.js' %}"></script>
-</head>
-<body>
+{% block title %}天天生鲜-注册{% endblock %}
+
+{% block content %}
 	<div class="register_con">
 		<div class="l_con fl">
 			<a class="reg_logo"><img src="{% static 'ttsx/images/logo02.png' %}"></a>
@@ -24,6 +17,7 @@
 				<a href="{% url 'user:login' %}">登录</a>
 			</div>
 			<div class="reg_form clearfix">
+
 				<form method="post" action="">
 					{% csrf_token %}
 				<ul>
@@ -45,37 +39,21 @@
 					<li>
 						<label>邮箱:</label>
 						<input type="text" name="email" id="email">
-						<span class="error_tip">提示信息</span>
+						<span class="error_tip"></span>
 					</li>
 					<li class="agreement">
 						<input type="checkbox" name="allow" id="allow" checked="checked">
 						<label>同意”天天生鲜用户使用协议“</label>
 						<span class="error_tip2">提示信息</span>
 					</li>
+					{{ msg }}
 					<li class="reg_sub">
 						<input type="submit" value="注 册" name="">
 					</li>
 				</ul>
 				</form>
+
 			</div>
-
 		</div>
-
 	</div>
-
-	<div class="footer no-mp">
-		<div class="foot_link">
-			<a href="#">关于我们</a>
-			<span>|</span>
-			<a href="#">联系我们</a>
-			<span>|</span>
-			<a href="#">招聘人才</a>
-			<span>|</span>
-			<a href="#">友情链接</a>
-		</div>
-		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
-		<p>电话：010-****888    京ICP备*******8号</p>
-	</div>
-
-</body>
-</html>
+{% endblock %}

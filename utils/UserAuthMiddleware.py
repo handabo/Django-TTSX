@@ -11,7 +11,17 @@ from sx_user.models import UserTicketModel
 class UserMiddle(MiddlewareMixin):
     def process_request(self, request):
         # 需要登录验证的页面
-        need_login = ['',
+        need_login = ['/store/index/',
+                      '/store/list/',
+                      '/user/user_center_info/',
+                      '/user/user_center_order/',
+                      '/user/user_center_site/',
+                      '/shopping/detail/',
+                      '/shopping/addgoods/',
+                      '/shopping/subgoods/',
+                      '/shopping/buycart/',
+                      '/shopping/addcart/',
+                      '/order/place_order/',
 
                       ]
         # 判断页面是否需要登录
@@ -25,8 +35,7 @@ class UserMiddle(MiddlewareMixin):
             user_ticket = UserTicketModel.objects.filter(ticket=ticket).first()
 
             if user_ticket:
-                # 1. 判断ticket值是否过期，如果没过期，request.user赋值
-                # 2. 如果过期了，跳转到登录页面，并删除ticket值
+                # 判断ticket值是否过期，如果没过期
                 if datetime.now() > user_ticket.out_time.replace(tzinfo=None):
                     # 过期处理
                     UserTicketModel.objects.filter(user=user_ticket.user).delete()
@@ -35,7 +44,7 @@ class UserMiddle(MiddlewareMixin):
                     # 没过期处理
                     request.user = user_ticket.user
                     # ttsx_users_ticket表中查询当前的user, 且ticket值不等于cookie中的ticket值
-                    UserTicketModel.objects.filter(Q(user=user_ticket) & Q(ticket=ticket)).delete()
+                    UserTicketModel.objects.filter(Q(user=user_ticket.user) & Q(ticket=ticket))
                     return None
             else:
                 return HttpResponseRedirect(reverse('user:login'))

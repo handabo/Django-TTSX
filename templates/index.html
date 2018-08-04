@@ -9,11 +9,11 @@
 		<div class="navbar">
 			<h1 class="fl">全部商品分类</h1>
 			<ul class="navlist fl">
-				<li><a href="">首页</a></li>
+				<li><a href="#">首页</a></li>
 				<li class="interval">|</li>
-				<li><a href="">手机生鲜</a></li>
+				<li><a href="#">手机生鲜</a></li>
 				<li class="interval">|</li>
-				<li><a href="">抽奖</a></li>
+				<li><a href="#">抽奖</a></li>
 			</ul>
 		</div>
 	</div>
@@ -63,7 +63,7 @@
 				{% for good1 in fresh_fruit %}
 				<li>
 					<h4><a href="{% url 'shopping:detail' %}?g_id={{ good1.id }}">{{ good1.g_name }}</a></h4>
-					<a href="{% url 'shopping:detail' %}"><img src="/media/{{ good1.g_img }}"></a>
+					<a href="{% url 'shopping:detail' %}?g_id={{ good1.id }}"><img src="/media/{{ good1.g_img }}"></a>
 					<div class="prize">¥ {{ good1.g_price }}</div>
 				</li>
 				{% endfor %}

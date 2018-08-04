@@ -1,5 +1,7 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 
+from sx_shopping.models import CartInfo
 from sx_store.models import GoodsValue, ArticleCategory
 
 
@@ -7,8 +9,13 @@ from sx_store.models import GoodsValue, ArticleCategory
 def detail(request):
     if request.method == 'GET':
         kinds = ArticleCategory.objects.all()
+        # 拿到的详情商品
         g_id = request.GET.get('g_id')
         goods = GoodsValue.objects.filter(id=g_id).first()
+
+        # 拿到的新品推荐商品
+        # pass
+
         data = {
             'kinds': kinds,
             'goods': goods
@@ -16,8 +23,44 @@ def detail(request):
         return render(request, 'detail.html', data)
 
 
-# 购物车
-def cart(request):
+# 增加商品数量
+def add_goods(request):
+    if request.method == 'POST':
+        user = request.user
+        data = {}
+        data['code'] = '1000'
+        if user.id:
+            goods_id = request.POST.get('goods_id')
+            # 验证当前登录用户是否对同一商品进行添加操作
+            cart = CartInfo.objects.filter(user=user, goods_id=goods_id).first()
+            if cart:
+                cart.count += 1
+                cart.save()
+                data['count'] = cart.c_num
+            else:
+                # 登录的当前用户没有添加商品到购物车中，则创建
+                CartInfo.objects.create(user=user, goods_id=goods_id)
+                data['count'] = 1
+            data['code'] = '200'
+            data['msg'] = '请求成功'
+            return JsonResponse(data)
+        return JsonResponse(data)
+
+
+# 减少商品数量
+def sub_goods(request):
+    if request.method == 'POST':
+        user = request.user
+        return 123
+
+
+# 立即购买
+def buy_cart(request):
     if request.method == 'GET':
         return render(request, 'cart.html')
+
+
+# 加入购物车
+def add_cart(request):
+    pass
 

@@ -9,11 +9,7 @@
 	</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'ttsx/css/reset.css' %}"/>
 	<link rel="stylesheet" type="text/css" href="{% static 'ttsx/css/main.css' %}"/>
-	<script type="text/javascript" src="{% static 'ttsx/js/jquery-1.12.4.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'ttsx/js/jquery-ui.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'ttsx/js/slide.js' %}"></script>
     {% block extCSS %}{% endblock %}
-
 </head>
 
 <body>
@@ -44,15 +40,13 @@
 			</div>
 		</div>
 	</div>
-		<div class="search_bar clearfix">
+
+	<div class="search_bar clearfix">
 		<a href="{% url 'store:index' %}" class="logo fl"><img src="{% static 'ttsx/images/logo.png' %}"></a>
-		<div class="search_con fl">
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;{% block abr %}{% endblock %}</div>
+		<div class="search_con fr">
 			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
 			<input type="button" class="input_btn fr" name="" value="搜索">
-		</div>
-		<div class="guest_cart fr">
-			<a href="{% url 'shopping:buycart' %}" class="cart_name fl">我的购物车</a>
-			<div class="goods_count fl" id="show_count">1</div>
 		</div>
 	</div>
 	{% block content %}{% endblock %}
@@ -67,11 +61,12 @@
 			<span>|</span>
 			<a href="#">友情链接</a>
 		</div>
-		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>CopyRight © 2017 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
 		<p>电话：010-****888    京ICP备*******8号</p>
 	</div>
 
-{% block extJS %}{% endblock %}
+	<script type="text/javascript" src="{% static 'ttsx/js/jquery-1.12.4.min.js' %}"></script>
+	{% block extJS %}{% endblock %}
 
 </body>
 </html>

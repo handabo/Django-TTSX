@@ -30,7 +30,7 @@ def list(request):
     if request.method == 'GET':
         kinds = ArticleCategory.objects.all()
         goods = GoodsValue.objects.filter(isDelete=0)
-        # 商品推荐前2名
+        # 商品推荐前2名, 暂时定2个
         tj_goods = GoodsValue.objects.filter(isDelete=0)[5:8]
         data = {
             'kinds': kinds,
