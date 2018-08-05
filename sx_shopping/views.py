@@ -39,6 +39,7 @@ def add_goods(request):
                 cart.count += 1
                 cart.save()
                 data['count'] = cart.count
+                data['goods_price'] = cart.goods.g_price * cart.count
             else:
                 # 验证当前登陆用户有没有添加商品到购物车中，如果没有则创建
                 CartInfo.objects.create(user=user, goods_id=goods_id)
@@ -67,6 +68,7 @@ def sub_goods(request):
                     cart.count -= 1
                     cart.save()
                     data['count'] = cart.count
+                    data['goods_price'] = cart.goods.g_price * cart.count
                 data['code'] = '200'
                 data['msg'] = '请求成功'
                 return JsonResponse(data)
@@ -106,6 +108,24 @@ def goods_num(request):
             }
             return JsonResponse(data)
 
+
+# 计算商品总价
+def tatal_price(request):
+    if request.method == 'GET':
+        user = request.user
+        # 获取购物车中的商品信息
+        carts = CartInfo.objects.filter(user=user)
+        tatal_price = 0
+        for cart in carts:
+            tatal_price = cart.goods.g_price * cart.count
+        # 总价保留2位小数
+        tatal_price = round(tatal_price, 2)
+        data = {
+            'tatal_price': tatal_price,
+            'code': '200',
+            'msg': '请求成功'
+        }
+        return JsonResponse(data)
 
 
 # 立即购买

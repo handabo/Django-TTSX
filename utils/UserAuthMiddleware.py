@@ -20,6 +20,7 @@ class UserMiddle(MiddlewareMixin):
                       '/shopping/addgoods/',
                       '/shopping/subgoods/',
                       '/shopping/goodsnum/',
+                      '/shopping/tatalprice/',
                       '/shopping/buycart/',
                       '/shopping/addcart/',
                       '/order/place_order/',

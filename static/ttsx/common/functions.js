@@ -9,12 +9,14 @@ function addgoods(id) {
         headers: {'X-CSRFToken': csrf},
         success:function (data) {
             if (data.code == '200'){
+                console.log(data);
                 $('.num_show_'+ id).val(data.count)
+                $('#price'+ id).html(data.goods_price)
             }
+            tatal_price()
         },
         error:function (data) {
             console.log(data)
-
         }
     })
 }
@@ -31,8 +33,11 @@ function subgoods(id) {
         headers:{'X-CSRFToken':csrf},
         success:function (data) {
             if (data.code == '200') {
+                console.log(data);
                 $('.num_show_'+ id).val(data.count)
+                $('#price'+ id).html(data.goods_price)
             }
+            tatal_price()
         },
         error:function (data) {
             console.log(data)
@@ -44,7 +49,7 @@ function subgoods(id) {
 // 刷新商品数量
 $.get('/shopping/goodsnum/', function (data) {
     if (data.code == '200'){
-        console.log(data)
+        console.log(data);
         for (var i=0; i<data.carts.length; i++){
             $('.num_show_'+ data.carts[i].goods_id).val(data.carts[i].count)
         }
@@ -52,8 +57,17 @@ $.get('/shopping/goodsnum/', function (data) {
 });
 
 
-
-
+// 计算商品总价
+function tatal_price() {
+    $.get('/shopping/tatalprice/', function (data) {
+        console.log(data);
+        if (data.code == '200'){
+            console.log(data)
+            // $('#').html(data.tatal_price)
+        }
+    })
+}
+tatal_price();
 
 
 

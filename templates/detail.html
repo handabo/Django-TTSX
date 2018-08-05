@@ -55,7 +55,7 @@
 
 				</div> 
 			</div>
-			<div class="total">总价：<em>16.80元</em></div>
+			<div class="total">总价：<em id="price{{ goods.id }}" >{{ goods.g_price }}</em> <em>元</em></div>
 			<div class="operate_btn">
 				<a href="{% url 'shopping:buycart' %}" class="buy_btn">立即购买</a>
 				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				
