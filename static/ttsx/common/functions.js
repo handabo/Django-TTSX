@@ -41,3 +41,27 @@ function subgoods(id) {
 }
 
 
+// 刷新商品数量
+$.get('/shopping/goodsnum/', function (data) {
+    if (data.code == '200'){
+        console.log(data)
+        for (var i=0; i<data.carts.length; i++){
+            $('.num_show_'+ data.carts[i].goods_id).val(data.carts[i].count)
+        }
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

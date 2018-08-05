@@ -54,7 +54,7 @@ def sub_goods(request):
     if request.method == 'POST':
         user = request.user
         data = {}
-        data['code'] = '1000'
+        data['code'] = '1001'
         data['msg'] = '请登录后再使用'
         if user.id:
             goods_id = request.POST.get('goods_id')
@@ -77,9 +77,34 @@ def sub_goods(request):
             return JsonResponse
 
 
-# 刷新增添与减少商品数量
-def goods_num():
-    pass
+# 刷新增添与减少的商品数量
+def goods_num(request):
+    if request.method == 'GET':
+        user = request.user
+        cart_list = []
+        if user.id:
+            carts = CartInfo.objects.filter(user=user)
+            for cart in carts:
+                data = {
+                    'id': cart.id,
+                    'goods_id': cart.goods.id,
+                    'count': cart.count,
+                    'user_id': cart.user.id,
+                }
+                cart_list.append(data)
+            data = {
+                'carts': cart_list,
+                'code': '200',
+                'msg': '请求成功'
+            }
+            return JsonResponse(data)
+        else:
+            data = {
+                'carts': '',
+                'code': '1002',
+                'msg': '请登录后再使用'
+            }
+            return JsonResponse(data)
 
 
 
