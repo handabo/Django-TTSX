@@ -28,7 +28,7 @@ def add_goods(request):
     if request.method == 'POST':
         user = request.user
         data = {}
-        data['code'] = '405'
+        data['code'] = '1000'
         data['msg'] = '请登录后再使用'
 
         if user.id:
@@ -53,7 +53,34 @@ def add_goods(request):
 def sub_goods(request):
     if request.method == 'POST':
         user = request.user
-        return 123
+        data = {}
+        data['code'] = '1000'
+        data['msg'] = '请登录后再使用'
+        if user.id:
+            goods_id = request.POST.get('goods_id')
+            cart = CartInfo.objects.filter(user=user, goods_id=goods_id).first()
+            if cart:
+                if cart.count == 1:
+                    cart.delete()
+                    data['count'] = 0
+                else:
+                    cart.count -= 1
+                    cart.save()
+                    data['count'] = cart.count
+                data['code'] = '200'
+                data['msg'] = '请求成功'
+                return JsonResponse(data)
+            else:
+                data['msg'] = '请添加商品'
+                return JsonResponse
+        else:
+            return JsonResponse
+
+
+# 刷新增添与减少商品数量
+def goods_num():
+    pass
+
 
 
 # 立即购买
