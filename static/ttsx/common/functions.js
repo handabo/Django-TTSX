@@ -70,7 +70,8 @@ function tatal_price() {
             console.log(data)
             $('#tatal_price').html(data.tatal_price);
             $('#all_num').html(data.num);
-            $('#all_num1').html(data.num)
+            $('#all_num1').html(data.num);
+            $('#payment').html(data.tatal_price + 10);  //实际付款
         }
     })
 }

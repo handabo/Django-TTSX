@@ -41,24 +41,28 @@
 			<li class="col04">数量</li>
 			<li class="col05">小计</li>		
 		</ul>
+
+		{% for cart in carts %}
 		<ul class="goods_list_td clearfix">
 			<li class="col01">1</li>			
-			<li class="col02"><img src="{% static 'ttsx/images/goods/goods012.jpg' %}"></li>
-			<li class="col03">奇异果</li>
-			<li class="col04">500g</li>
-			<li class="col05">25.80元</li>
-			<li class="col06">1</li>
-			<li class="col07">25.80元</li>	
+			<li class="col02"><img src="/media/{{ cart.goods.g_img }}"></li>
+			<li class="col03">{{ cart.goods.g_name }}</li>
+			<li class="col04">{{ cart.goods.g_unit }}</li>
+			<li class="col05">{{ cart.goods.g_price }}元</li>
+			<li class="col06">{{ cart.count }}</li>
+			<li class="col07"><em id="price{{ cart.goods.id }}" ></em> <em>元</em></li>
 		</ul>
+		{% endfor %}
+
 	</div>
 
 	<h3 class="common_title">总金额结算</h3>
 
 	<div class="common_list_con clearfix">
 		<div class="settle_con">
-			<div class="total_goods_count">共<em>2</em>件商品，总金额<b>42.60元</b></div>
-			<div class="transit">运费：<b>10元</b></div>
-			<div class="total_pay">实付款：<b>52.60元</b></div>
+			<div class="total_goods_count">共<em id="all_num">2</em>件商品，总金额<b id="tatal_price"></b><b>元</b></div>
+			<div class="transit">运费：<b>10&nbsp&nbsp&nbsp元</b></div>
+			<div class="total_pay">实付款：<b id="payment" ></b><b>元</b></div>
 		</div>
 	</div>
 

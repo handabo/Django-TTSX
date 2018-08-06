@@ -116,10 +116,7 @@ def goods_num(request):
 
 # 加入购物车
 def add_cart(request):
-    if request.method == 'POST':
-        user = request.user
-        carts = CartInfo.objects.filter(user=user)
-        pass
+    pass
 
 
 # 立即购买
