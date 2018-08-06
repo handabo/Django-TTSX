@@ -1,5 +1,6 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.core.urlresolvers import reverse
 
 from sx_shopping.models import CartInfo
 from sx_store.models import GoodsValue, ArticleCategory
@@ -153,5 +154,13 @@ def tatal_price(request):
         return JsonResponse(data)
 
 
-
+# 删除购物车商品
+def del_goods_cart(request):
+    if request.method == 'GET':
+        user = request.user
+        cart_id = request.GET.get('cart_id')
+        CartInfo.objects.filter(user=user, id=cart_id).delete()
+        data = {'code': '1006',
+                'msg': '删除成功'}
+        return HttpResponseRedirect(reverse('shopping:buycart'), data)
 

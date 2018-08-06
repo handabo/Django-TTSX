@@ -23,6 +23,8 @@ class UserMiddle(MiddlewareMixin):
                       '/shopping/addcart/',
                       '/shopping/buycart/',
                       '/shopping/tatalprice/',
+                      '/shopping/delgoodscart/',
+
                       '/order/place_order/',
                       ]
         # 判断页面是否需要登录

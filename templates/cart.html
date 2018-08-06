@@ -33,7 +33,7 @@
 		</li>
 		<li class="col07"><em id="price{{ cart.goods.id }}" >{{ goods.g_price }}</em> <em>元</em></li>
 
-		<li class="col08"><a href="javascript:;">删除</a></li>
+		<li class="col08"><a href="{% url 'shopping:delgoodscart' %}?cart_id={{ cart.id }}">删除</a></li>
 	</ul>
 {% endfor %}
 

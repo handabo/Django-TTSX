@@ -50,7 +50,7 @@ function subgoods(id) {
 }
 
 
-// 刷新商品数量
+// 刷新商品数量, 单个商品总价
 $.get('/shopping/goodsnum/', function (data) {
     if (data.code == '200'){
         console.log(data); //测试

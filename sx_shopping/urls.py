@@ -17,6 +17,8 @@ urlpatterns = [
     url(r'^buycart/', views.buy_cart, name='buycart'),
     # 计算商品总价
     url(r'^tatalprice/', views.tatal_price, name='tatalprice'),
+    # 删除购物车商品
+    url(r'^delgoodscart/', views.del_goods_cart, name='delgoodscart'),
 
 ]
 
