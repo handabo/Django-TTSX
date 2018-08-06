@@ -28,9 +28,6 @@ def add_goods(request):
     if request.method == 'POST':
         user = request.user
         data = {}
-        data['code'] = '1000'
-        data['msg'] = '请登录后再使用'
-
         if user.id:
             goods_id = request.POST.get('goods_id')
             # 验证当前登录用户是否对同一商品进行添加操作, 如果有则继续添加
@@ -39,6 +36,7 @@ def add_goods(request):
                 cart.count += 1
                 cart.save()
                 data['count'] = cart.count
+                # 计算单个商品总价
                 data['goods_price'] = cart.goods.g_price * cart.count
             else:
                 # 验证当前登陆用户有没有添加商品到购物车中，如果没有则创建
@@ -47,6 +45,8 @@ def add_goods(request):
             data['code'] = '200'
             data['msg'] = '请求成功'
             return JsonResponse(data)
+        data['code'] = '1000'
+        data['msg'] = '请登录后再使用'
         return JsonResponse(data)
 
 
@@ -55,28 +55,30 @@ def sub_goods(request):
     if request.method == 'POST':
         user = request.user
         data = {}
-        data['code'] = '1001'
-        data['msg'] = '请登录后再使用'
         if user.id:
             goods_id = request.POST.get('goods_id')
             cart = CartInfo.objects.filter(user=user, goods_id=goods_id).first()
             if cart:
                 if cart.count == 1:
-                    cart.delete()
-                    data['count'] = 0
+                    # cart.delete()
+                    # data['count'] = 0
+                    data['msg'] = '亲! 至少买一个吧'
                 else:
                     cart.count -= 1
                     cart.save()
                     data['count'] = cart.count
+                    # 计算单个商品总价
                     data['goods_price'] = cart.goods.g_price * cart.count
                 data['code'] = '200'
                 data['msg'] = '请求成功'
                 return JsonResponse(data)
             else:
                 data['msg'] = '请添加商品'
-                return JsonResponse
+                return JsonResponse(data)
         else:
-            return JsonResponse
+            data['code'] = '1001'
+            data['msg'] = '请登录后再使用'
+            return JsonResponse(data)
 
 
 # 刷新增添与减少的商品数量
@@ -117,7 +119,7 @@ def tatal_price(request):
         carts = CartInfo.objects.filter(user=user)
         tatal_price = 0
         for cart in carts:
-            tatal_price = cart.goods.g_price * cart.count
+            tatal_price += cart.goods.g_price * cart.count
         # 总价保留2位小数
         tatal_price = round(tatal_price, 2)
         data = {

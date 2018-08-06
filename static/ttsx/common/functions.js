@@ -13,7 +13,6 @@ function addgoods(id) {
                 $('.num_show_'+ id).val(data.count)
                 $('#price'+ id).html(data.goods_price)
             }
-            tatal_price()
         },
         error:function (data) {
             console.log(data)
@@ -33,11 +32,14 @@ function subgoods(id) {
         headers:{'X-CSRFToken':csrf},
         success:function (data) {
             if (data.code == '200') {
+                if (data.count >= 1){
+                    $('.num_show_'+ id).val(data.count)
+                    $('#price'+ id).html(data.goods_price)
+                }else {
+                    alert('亲! 生活不易啊, 至少买一个吧!')
+                }
                 console.log(data);
-                $('.num_show_'+ id).val(data.count)
-                $('#price'+ id).html(data.goods_price)
             }
-            tatal_price()
         },
         error:function (data) {
             console.log(data)

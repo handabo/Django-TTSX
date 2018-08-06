@@ -36,7 +36,7 @@
 
 {% csrf_token %}
 	<div class="goods_detail_con clearfix">
-		<div class="goods_detail_pic fl"><img src="/media/{{ goods.g_img }}" width="350" height="350"></div>
+		<div class="goods_detail_pic fl"><img src="/media/{{ goods.g_img }}" width="350px" height="350px"></div>
 		<div class="goods_detail_list fr">
 			<h3>{{ goods.g_name }}</h3>
 			<!--<p>草莓浆果柔软多汁，味美爽口，适合速冻保鲜贮藏。草莓速冻后，可以保持原有的色、香、味，既便于贮藏，又便于外销。</p>-->
@@ -48,12 +48,11 @@
 				<div class="num_name fl">数 量：</div>
 				<div class="num_add fl">
 					<input type="text" class="num_show_{{ goods.id }} fl" value="0">
-
 					<a href="javascript:;" onclick="addgoods({{ goods.id }})" class="add fr">+</a>
-
 					<a href="javascript:;" onclick="subgoods({{ goods.id }})" class="minus fr">-</a>
+				</div>
+				<div class="num_name fl">&nbsp&nbsp&nbsp库存：<em>{{ goods.g_repertory }}</em></div>
 
-				</div> 
 			</div>
 			<div class="total">总价：<em id="price{{ goods.id }}" >{{ goods.g_price }}</em> <em>元</em></div>
 			<div class="operate_btn">

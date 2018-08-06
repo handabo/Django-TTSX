@@ -59,7 +59,7 @@
 
 		<div class="goods_con clearfix">
 			<div class="goods_banner fl"><img src="{% static 'ttsx/images/banner01.jpg' %}"></div>
-			<ul class="goods_list fl">
+			<ul onclick="subgoods({{ goods.id }})" class="goods_list fl">
 				{% for good1 in fresh_fruit %}
 				<li>
 					<h4><a href="{% url 'shopping:detail' %}?g_id={{ good1.id }}">{{ good1.g_name }}</a></h4>
