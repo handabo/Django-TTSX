@@ -13,6 +13,7 @@ function addgoods(id) {
                 $('.num_show_'+ id).val(data.count)
                 $('#price'+ id).html(data.goods_price)
             }
+            tatal_price();
         },
         error:function (data) {
             console.log(data)
@@ -38,6 +39,7 @@ function subgoods(id) {
                 }else {
                     alert('亲! 生活不易啊, 至少买一个吧!')
                 }
+                tatal_price();
                 console.log(data);
             }
         },
@@ -51,9 +53,10 @@ function subgoods(id) {
 // 刷新商品数量
 $.get('/shopping/goodsnum/', function (data) {
     if (data.code == '200'){
-        console.log(data);
+        console.log(data); //测试
         for (var i=0; i<data.carts.length; i++){
-            $('.num_show_'+ data.carts[i].goods_id).val(data.carts[i].count)
+            $('.num_show_'+ data.carts[i].goods_id).val(data.carts[i].count);
+            $('#price'+ data.carts[i].goods_id).html(data.carts[i].goods_price)
         }
     }
 });
@@ -65,7 +68,9 @@ function tatal_price() {
         console.log(data);
         if (data.code == '200'){
             console.log(data)
-            // $('#').html(data.tatal_price)
+            $('#tatal_price').html(data.tatal_price);
+            $('#all_num').html(data.num);
+            $('#all_num1').html(data.num)
         }
     })
 }

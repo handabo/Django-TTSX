@@ -37,7 +37,7 @@ def add_goods(request):
                 cart.save()
                 data['count'] = cart.count
                 # 计算单个商品总价
-                data['goods_price'] = cart.goods.g_price * cart.count
+                data['goods_price'] = round(cart.goods.g_price * cart.count, 2)
             else:
                 # 验证当前登陆用户有没有添加商品到购物车中，如果没有则创建
                 CartInfo.objects.create(user=user, goods_id=goods_id)
@@ -68,7 +68,7 @@ def sub_goods(request):
                     cart.save()
                     data['count'] = cart.count
                     # 计算单个商品总价
-                    data['goods_price'] = cart.goods.g_price * cart.count
+                    data['goods_price'] = round(cart.goods.g_price * cart.count, 2)
                 data['code'] = '200'
                 data['msg'] = '请求成功'
                 return JsonResponse(data)
@@ -81,7 +81,7 @@ def sub_goods(request):
             return JsonResponse(data)
 
 
-# 刷新增添与减少的商品数量
+# 刷新商品增添/减少数量, 单个商品总价刷新
 def goods_num(request):
     if request.method == 'GET':
         user = request.user
@@ -94,6 +94,8 @@ def goods_num(request):
                     'goods_id': cart.goods.id,
                     'count': cart.count,
                     'user_id': cart.user.id,
+                    # 单个商品总价
+                    'goods_price': round(cart.goods.g_price * cart.count, 2)
                 }
                 cart_list.append(data)
             data = {
@@ -111,6 +113,23 @@ def goods_num(request):
             return JsonResponse(data)
 
 
+# 加入购物车
+def add_cart(request):
+    if request.method == 'POST':
+        user = request.user
+        carts = CartInfo.objects.filter(user=user)
+        pass
+
+
+# 立即购买
+def buy_cart(request):
+    if request.method == 'GET':
+        user = request.user
+        carts = CartInfo.objects.filter(user=user)
+        data = {'carts': carts}
+        return render(request, 'cart.html', data)
+
+
 # 计算商品总价
 def tatal_price(request):
     if request.method == 'GET':
@@ -118,25 +137,21 @@ def tatal_price(request):
         # 获取购物车中的商品信息
         carts = CartInfo.objects.filter(user=user)
         tatal_price = 0
+        num = 0
         for cart in carts:
             tatal_price += cart.goods.g_price * cart.count
+            # 计算购物车商品件数
+            num += 1
         # 总价保留2位小数
         tatal_price = round(tatal_price, 2)
         data = {
             'tatal_price': tatal_price,
+            'num': num,
             'code': '200',
             'msg': '请求成功'
         }
         return JsonResponse(data)
 
 
-# 立即购买
-def buy_cart(request):
-    if request.method == 'GET':
-        return render(request, 'cart.html')
 
-
-# 加入购物车
-def add_cart(request):
-    pass
 

@@ -20,13 +20,10 @@ class UserMiddle(MiddlewareMixin):
                       '/shopping/addgoods/',
                       '/shopping/subgoods/',
                       '/shopping/goodsnum/',
-
-                      '/shopping/tatalprice/',
-                      '/shopping/buycart/',
                       '/shopping/addcart/',
+                      '/shopping/buycart/',
+                      '/shopping/tatalprice/',
                       '/order/place_order/',
-
-
                       ]
         # 判断页面是否需要登录
         if request.path in need_login:
