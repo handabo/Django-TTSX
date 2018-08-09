@@ -29,7 +29,6 @@ urlpatterns = [
     url(r'^shopping/', include('sx_shopping.urls', namespace='shopping')),
     # 订单路由
     url(r'^order/', include('sx_order.urls', namespace='order')),
-
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

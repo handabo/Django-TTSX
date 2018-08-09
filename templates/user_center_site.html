@@ -10,9 +10,9 @@
 		<div class="left_menu_con clearfix">
 			<h3>用户中心</h3>
 			<ul>
-				<li><a href="{% url 'user:user_center_info' %}">· 个人信息</a></li>
-				<li><a href="{% url 'user:user_center_order' %}">· 全部订单</a></li>
-				<li><a href="{% url 'user:user_center_site' %}" class="active">· 收货地址</a></li>
+				<li><a href="{% url 'order:user_center_info' %}">· 个人信息</a></li>
+				<li><a href="{% url 'order:user_center_order' %}">· 全部订单</a></li>
+				<li><a href="{% url 'order:user_center_site' %}" class="active">· 收货地址</a></li>
 			</ul>
 		</div>
 		<div class="right_content clearfix">
@@ -20,29 +20,30 @@
 				<div class="site_con">
 					<dl>
 						<dt>当前地址：</dt>
-						<dd>北京市 海淀区 东北旺西路8号中关村软件园 （李思 收） 182****7528</dd>
+						<dd>{{ user_info.direction }} （{{ user_info.recipients }} 收）
+							{{ user_info.phone }} 邮编:{{ user_info.addressee_p }}</dd>
 					</dl>					
 				</div>
-				<h3 class="common_title2">编辑地址</h3>
+				<h3 class="common_title2">编辑地址&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{msg}}</h3>
 				<div class="site_con">
-					<form>
+					<form method="post" action="">
+						{% csrf_token %}
 						<div class="form_group">
 							<label>收件人：</label>
-							<input type="text" name="">
+							<input type="text" name="recipients">
 						</div>
 						<div class="form_group form_group2">
 							<label>详细地址：</label>
-							<textarea class="site_area"></textarea>
+							<textarea class="site_area" name="direction"></textarea>
 						</div>
 						<div class="form_group">
 							<label>邮编：</label>
-							<input type="text" name="">
+							<input type="text" name="addressee_p">
 						</div>
 						<div class="form_group">
 							<label>手机：</label>
-							<input type="text" name="">
+							<input type="text" name="phone">
 						</div>
-
 						<input type="submit" name="" value="提交" class="info_submit">
 					</form>
 				</div>

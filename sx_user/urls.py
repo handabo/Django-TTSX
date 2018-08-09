@@ -9,10 +9,4 @@ urlpatterns = [
     url(r'^login/', views.login, name='login'),
     # 退出
     url(r'^logout/', views.logout, name='logout'),
-    # 用户中心 - 用户信息页
-    url(r'^user_center_info/', views.user_center_info, name='user_center_info'),
-    # 用户中心 - 用户订单页
-    url(r'^user_center_order/', views.user_center_order, name='user_center_order'),
-    # 用户中心 - 用户收货地址页
-    url(r'^user_center_site/', views.user_center_site, name='user_center_site'),
 ]

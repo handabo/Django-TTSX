@@ -25,6 +25,9 @@ class UserMiddle(MiddlewareMixin):
                       '/shopping/tatalprice/',
                       '/shopping/delgoodscart/',
                       '/order/place_order/',
+                      '/order/user_center_info/',
+                      '/order/user_center_order/',
+                      '/order/user_center_site/',
                       ]
         # 判断页面是否需要登录
         if request.path in need_login:

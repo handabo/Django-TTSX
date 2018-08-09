@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     'sx_store',
     # 购物应用: 商品详情页detail.html, 购物车页cart.html
     'sx_shopping',
-    # 订单应用: 提交订单页place_order.html,
+    # 订单应用: 提交订单页place_order.html, 信息info/订单order/收货地址site
     'sx_order',
-    # 用户中心: 注册页register.html,登陆页login.html 信息info/订单order/收货地址site
+    # 用户中心: 注册页register.html,登陆页login.html
     'sx_user',
     # 后台管理
     'ttsxAdmin',

@@ -80,19 +80,3 @@ def logout(request):
         user_ticket = UserTicketModel.objects.filter(ticket=ticket).first()
         UserTicketModel.objects.filter(user=user_ticket.user).delete()
         return HttpResponseRedirect(reverse('user:login'))
-
-
-# 用户中心
-def user_center_info(request):
-    if request.method == 'GET':
-        return render(request, 'user_center_info.html')
-
-
-def user_center_order(request):
-    if request.method == 'GET':
-        return render(request, 'user_center_order.html')
-
-
-def user_center_site(request):
-    if request.method == 'GET':
-        return render(request, 'user_center_site.html')
